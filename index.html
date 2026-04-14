@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderson Jhonatha | Frontend Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIÁVEIS MODERN CYBERPUNK --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-panel: #0f0f11;
+            --accent-cyan: #00e5ff;
+            --accent-purple: #b300ff;
+            --accent-yellow: #fcee0a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --font-title: 'Orbitron', sans-serif;
+            --font-text: 'Rajdhani', sans-serif;
+        }
+
+        /* --- RESET E BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            /* Fundo com pontos sutis em vez de linhas fortes */
+            background-image: radial-gradient(rgba(0, 229, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-title);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        /* --- HERO / RESUMO --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 80px;
+            animation: slideDown 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .profile-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid transparent;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.4s;
+        }
+
+        /* Anel animado ao redor da foto */
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple), var(--accent-yellow));
+            z-index: 1;
+            animation: rotateRing 4s linear infinite;
+            opacity: 0.8;
+        }
+        
+        .profile-container::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px; bottom: 2px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            z-index: 1;
+        }
+
+        .profile-container:hover .profile-pic {
+            transform: scale(1.05);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .hero h2 {
+            font-size: 1.1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 25px;
+            letter-spacing: 4px;
+        }
+
+        .summary-box {
+            max-width: 700px;
+            background: var(--bg-panel);
+            padding: 25px;
+            border-left: 4px solid var(--accent-purple);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+        }
+
+        .summary-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(179, 0, 255, 0.1), transparent);
+            animation: scan 3s infinite linear;
+        }
+
+        .info-badges {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            font-family: var(--font-title);
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .info-badges i {
+            color: var(--accent-cyan);
+            margin-right: 5px;
+        }
+
+        /* --- SESSÕES GERAIS --- */
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+            padding-right: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%; right: -40px;
+            width: 40px; height: 2px;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* --- HABILIDADES --- */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+            margin-bottom: 80px;
+        }
+
+        .skill-btn {
+            background: var(--bg-panel);
+            border: 1px solid #222;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-title);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-btn i {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            transition: color 0.3s;
+        }
+
+        .skill-btn:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* --- MODAL DE HABILIDADE (ANIMAÇÃO DE MONTAGEM) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-box {
+            background: var(--bg-panel);
+            border: 1px solid var(--accent-purple);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            transform: scaleY(0);
+            transform-origin: center;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 30px rgba(179, 0, 255, 0.1);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scaleY(1);
+        }
+
+        .modal-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 15px var(--accent-cyan);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-purple);
+        }
+
+        #modal-title {
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #modal-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease 0.3s; /* Atrasa para aparecer depois da caixa */
+        }
+
+        .modal-overlay.active #modal-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- PROJETOS (DESIGN MANTIDO) --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .project-card {
+            background: var(--bg-panel);
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: #444;
+        }
+
+        .project-img {
+            width: 100%;
+            height: 200px;
+            background: #111;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ajuste para a API carregar imagem suavemente */
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, opacity 1s ease;
+            opacity: 0; /* Começa invisível para o fade-in */
+        }
+
+        .project-img img.loaded {
+            opacity: 0.7;
+        }
+
+        .project-card:hover .project-img img.loaded {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+
+        /* Texto de loading estilo cyberpunk */
+        .loader-text {
+            position: absolute;
+            font-family: var(--font-title);
+            font-size: 0.7rem;
+            color: var(--accent-cyan);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .project-info {
+            padding: 25px;
+        }
+
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .project-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background: transparent;
+            color: var(--accent-yellow);
+            border: 1px solid var(--accent-yellow);
+            padding: 10px 20px;
+            font-family: var(--font-title);
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-link::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: var(--accent-yellow);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .btn-link:hover {
+            color: #000;
+        }
+
+        .btn-link:hover::before {
+            left: 0;
+        }
+
+        /* Animação ao clicar no projeto */
+        .btn-link.clicking {
+            animation: glitchClick 0.4s forwards;
+        }
+
+        /* --- CONTATO --- */
+        .contact-section {
+            border-top: 1px solid #222;
+            padding-top: 50px;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            color: var(--accent-cyan);
+        }
+
+        .contact-item:hover i {
+            color: var(--accent-cyan);
+            transform: translateY(-5px);
+            text-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* --- KEYFRAMES --- */
+        @keyframes rotateRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        @keyframes glitchClick {
+            0% { box-shadow: 0 0 0 var(--accent-yellow); transform: scale(1); }
+            50% { box-shadow: 0 0 20px var(--accent-yellow); transform: scale(0.95); background: #fff;}
+            100% { box-shadow: 0 0 50px var(--accent-yellow); transform: scale(1.1); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="hero">
+            <div class="profile-container">
+                <img src="imagem.jpeg" alt="Wanderson Jhonatha" class="profile-pic">
+            </div>
+            
+            <h1>Wanderson Jhonatha</h1>
+            <h2>// Desenvolvedor Frontend</h2>
+            
+            <div class="summary-box">
+                <p>
+                    Sou um desenvolvedor Frontend em formação, apaixonado por criar experiências digitais modernas. Embora eu tenha começado a estudar tecnologia profissionalmente de forma mais intensa em 2026, minha fascinação por esse universo vem desde a infância, sempre querendo entender como as coisas funcionavam por trás das telas. 
+                    <br><br>
+                    Meu foco é dominar a criação de interfaces responsivas, com alto nível de interação, unindo design simples e estiloso a um código limpo. Estou sempre explorando novas formas de animar e dar vida a projetos web.
+                </p>
+            </div>
+
+            <div class="info-badges">
+                <span><i class="fa-solid fa-calendar-days"></i> 20 Anos</span>
+                <span><i class="fa-solid fa-location-dot"></i> Grajaú - MA</span>
+            </div>
+        </header>
+
+        <section class="skills-section">
+            <h2 class="section-title">Tecnologias</h2>
+            <div class="skills-grid">
+                <button class="skill-btn" data-skill="html">
+                    <i class="fa-brands fa-html5"></i> HTML5
+                </button>
+                <button class="skill-btn" data-skill="css">
+                    <i class="fa-brands fa-css3-alt"></i> CSS3
+                </button>
+                <button class="skill-btn" data-skill="js">
+                    <i class="fa-brands fa-square-js"></i> JavaScript
+                </button>
+               
+                <button class="skill-btn" data-skill="git">
+                    <i class="fa-brands fa-github"></i> Git / GitHub
+                </button>
+            </div>
+        </section>
+
+        <section class="projects-section">
+            <h2 class="section-title">Galeria de Projetos</h2>
+            <div class="projects-grid">
+                
+                <div class="project-card">
+                    <div class="project-img auto-screenshot" data-url="https://jhonathaalvs-cell.github.io/Studio-Lumiere/">
+                        <span class="loader-text">SYS_SCANNING...</span>
+                    </div>
+                    <div class="project-info">
+                        <h3>Studio Lumière</h3>
+                        <p>Desenvolvimento do Studio Lumiere aplicando conceitos de Design Responsivo e Semântica. Utilizei ferramentas de IA para implementar camadas iniciais de JavaScript e Media Queries, focando na compreensão da estrutura lógica e adaptabilidade do layout.</p>
+                        <a href="https://jhonathaalvs-cell.github.io/Studio-Lumiere/" class="btn-link project-link" target="_blank">Acessar Sistema</a>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="contact-section">
+            <h2 class="section-title">Conexão</h2>
+            <div class="contact-grid">
+                <a href="https://wa.me/559992080303" class="contact-item" target="_blank">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    (99) 9208-0303
+                </a>
+                <a href="mailto:jhonathaalvs@gmail.com" class="contact-item">
+                    <i class="fa-solid fa-envelope"></i>
+                    jhonathaalvs@gmail.com
+                </a>
+                <a href="https://github.com/jhonathaalvs-cell" class="contact-item" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                    GitHub
+                </a>
+            </div>
+        </footer>
+
+    </div>
+
+    <div id="skill-modal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close-btn" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modal-title"><i class="fa-solid fa-microchip"></i> <span>Habilidade</span></h3>
+            <p id="modal-desc">Descrição detalhada carregando...</p>
+        </div>
+    </div>
+
+    <script>
+        // --- LOGICA DE SCREENSHOT AUTOMATICO ---
+        function initScreenshots() {
+            const containers = document.querySelectorAll('.auto-screenshot');
+            
+            containers.forEach(container => {
+                const url = container.getAttribute('data-url');
+                // API Microlink para gerar o print
+                const apiUrl = `https://api.microlink.io?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`;
+                
+                const img = new Image();
+                img.src = apiUrl;
+                
+                img.onload = () => {
+                    const loader = container.querySelector('.loader-text');
+                    if(loader) loader.remove();
+                    container.appendChild(img);
+                    // Pequeno delay para a animação CSS de fade-in funcionar
+                    setTimeout(() => img.classList.add('loaded'), 50);
+                };
+            });
+        }
+        
+        // Inicia os prints ao carregar
+        window.addEventListener('DOMContentLoaded', initScreenshots);
+
+        // Dados das habilidades para preencher o Modal
+        const skillsData = {
+            html: {
+                title: "HTML5",
+                icon: "fa-brands fa-html5",
+                desc: "Estruturação semântica de páginas web. Foco em criar um esqueleto limpo, acessível e otimizado para motores de busca (SEO), garantindo a melhor base para as aplicações."
+            },
+            css: {
+                title: "CSS3",
+                icon: "fa-brands fa-css3-alt",
+                desc: "Estilização avançada com Flexbox e Grid. Criação de designs responsivos (Mobile First), interfaces modernas e animações fluidas como as que você está vendo neste portfólio."
+            },
+            js: {
+                title: "JavaScript",
+                icon: "fa-brands fa-square-js",
+                desc: "Coração da interatividade. Construção de lógicas no lado do cliente, manipulação do DOM em tempo real e consumo de APIs externas para criar aplicações dinâmicas."
+            },
+            git: {
+                title: "Git & GitHub",
+                icon: "fa-brands fa-github",
+                desc: "Controle de versão seguro. Manutenção do histórico de código, criação de ramificações (branches) para novas features e facilidade no trabalho colaborativo."
+            }
+        };
+
+        // Lógica do Modal
+        const skillBtns = document.querySelectorAll('.skill-btn');
+        const modal = document.getElementById('skill-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const modalTitleIcon = document.querySelector('#modal-title i');
+        const modalTitleText = document.querySelector('#modal-title span');
+        const modalDesc = document.getElementById('modal-desc');
+
+        // Abrir Modal e montar conteúdo
+        skillBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const skillKey = btn.getAttribute('data-skill');
+                const data = skillsData[skillKey];
+
+                // Preenche os dados
+                modalTitleIcon.className = data.icon;
+                modalTitleText.textContent = data.title;
+                modalDesc.textContent = data.desc;
+
+                // Ativa a animação de "montagem"
+                modal.classList.add('active');
+            });
+        });
+
+        // Fechar Modal
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Fechar clicando fora da caixa
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Lógica da animação de clique nos projetos
+        const projectLinks = document.querySelectorAll('.project-link');
+        
+        projectLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Impede que abra instantaneamente
+                e.preventDefault(); 
+                
+                const targetUrl = this.getAttribute('href');
+                const linkTarget = this.getAttribute('target');
+
+                // Adiciona a classe de animação (flash digital)
+                this.classList.add('clicking');
+
+                // Espera a animação acabar (400ms) para redirecionar
+                setTimeout(() => {
+                    this.classList.remove('clicking'); // Reseta
+                    if(targetUrl !== "#") {
+                        if(linkTarget === "_blank") {
+                            window.open(targetUrl, '_blank');
+                        } else {
+                            window.location.href = targetUrl;
+                        }
+                    }
+                }, 400);
+            });
+        });
+    </script>
+</body>
+</html>
